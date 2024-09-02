@@ -17,9 +17,9 @@ set(CMAKE_PDB_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/pdb)
 find_package(glfw3 3.4 REQUIRED)
 find_package(GLEW REQUIRED)
 # find_package(cglm REQUIRED)
-# find_package(glm REQUIRED)
+find_package(glm REQUIRED)
 
-set(ALL_LIBS glfw GLEW::GLEW)
+set(ALL_LIBS glfw GLEW::GLEW glm::glm)
 
 set(LIBRARY "Example_library")
 add_library(${LIBRARY} STATIC)

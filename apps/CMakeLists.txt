@@ -18,13 +18,3 @@ set_target_properties(${EXECUTABLE}
     RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/../bin
     RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/../bin
 )
-
-set(EXECUTABLE "tutorial_code")
-add_executable(${EXECUTABLE} tutorial_code.cpp)
-target_link_libraries(${EXECUTABLE} ${LIBRARY})
-set_target_properties(${EXECUTABLE}
-    PROPERTIES 
-    LINKER_LANGUAGE CXX
-    RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/../bin
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/../bin
-)

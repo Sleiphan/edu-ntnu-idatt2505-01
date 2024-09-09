@@ -8,6 +8,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #define GL_WINDOW_WIDTH 720
 #define GL_WINDOW_HEIGHT 480
@@ -83,6 +85,21 @@ void render(int attrib_ID, GLenum mode, GLint vertex_count)
   glDrawArrays(mode, 0, vertex_count);
 }
 
+glm::mat4 create_model_matrix(glm::vec3 position, glm::vec3 scale)
+{
+  glm::mat4 model = glm::mat4(1.0f);
+
+  model[3][0] += position.x;
+  model[3][1] += position.y;
+  model[3][2] += position.z;
+
+  model[0][0] *= scale.x;
+  model[1][1] *= scale.y;
+  model[2][2] *= scale.z;
+
+  return model;
+}
+
 int main()
 {
   GLFWwindow *window = init_opengl();
@@ -92,20 +109,33 @@ int main()
   glUseProgram(shader_id);
 
   // Create a handle pointing to the matrix inside our shader
-  GLuint matrix_handle = glGetUniformLocation(shader_id, "MVP");
-  glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
-
-  // Camera matrix
-  glm::mat4 View = glm::lookAt(
-      glm::vec3(0, 0, 5),
+  GLuint model_matrix_handle = glGetUniformLocation(shader_id, "model_matrix");
+  GLuint view_matrix_handle = glGetUniformLocation(shader_id, "view_matrix");
+  GLuint projection_matrix_handle = glGetUniformLocation(shader_id, "projection_matrix");
+  // glm::mat4 Model = glm::mat4(1.0f);
+  glm::mat4 view_matrix = glm::lookAt(
+      glm::vec3(0, 0, 20),
       glm::vec3(0, 0, 0),
       glm::vec3(0, 1, 0));
+  glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
+  // glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &Model[0][0]);
+  glUniformMatrix4fv(view_matrix_handle, 1, GL_FALSE, &view_matrix[0][0]);
+  glUniformMatrix4fv(projection_matrix_handle, 1, GL_FALSE, &Projection[0][0]);
 
-  // Model matrix: an identity matrix (model will be at the origin)
-  glm::mat4 Model = glm::mat4(1.0f);
-  // Our ModelViewProjection: multiplication of our 3 matrices
-  glm::mat4 final_matrix = Projection * View * Model;
-  glUniformMatrix4fv(matrix_handle, 1, GL_FALSE, &final_matrix[0][0]);
+  float space = 5;
+  float scale = 0.5;
+
+  glm::mat4 model_matrices[] = {
+      create_model_matrix(glm::vec3(-space, space, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(0, space, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(space, space, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(-space, 0, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(0, 0, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(space, 0, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(-space, -space, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(0, -space, 0), glm::vec3(scale)),
+      create_model_matrix(glm::vec3(space, -space, 0), glm::vec3(scale)),
+  };
 
   // Setup one Vertex Array Object to contain multiple Vertex Buffer Objects
   GLuint vertex_array;
@@ -118,27 +148,39 @@ int main()
   glBindBuffer(GL_ARRAY_BUFFER, vertices_vbo);                                                   // Select our vertex buffer; we are going to do something with it.
   glBufferData(GL_ARRAY_BUFFER, sizeof(vertex_data_source), vertex_data_source, GL_STATIC_DRAW); // Add data to VBO
 
+  float current_rotation = 0.0f;
+
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
          glfwWindowShouldClose(window) == 0)
   {
-    glEnableVertexAttribArray(0); // 1rst attribute buffer : vertices
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertices_vbo);
-    // render(0, GL_POINTS, 8);
-    // render(0, GL_LINES, 8);
-    // render(0, GL_LINE_STRIP, 8);
+    glm::mat4 view = glm::rotate(view_matrix, current_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+    glUniformMatrix4fv(view_matrix_handle, 1, GL_FALSE, &view[0][0]);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[0][0][0]);
+    render(0, GL_POINTS, 8);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[1][0][0]);
+    render(0, GL_LINES, 8);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[2][0][0]);
+    render(0, GL_LINE_STRIP, 8);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[3][0][0]);
     render(0, GL_LINE_LOOP, 8);
-    // render(0, GL_TRIANGLES, 6);
-    // render(0, GL_TRIANGLE_STRIP, 8);
-    // render(0, GL_TRIANGLE_FAN, 8);
-    // render(0, GL_QUADS, 4);        // GL_INVALID_ENUM
-    // render(0, GL_QUAD_STRIP, 4);   // GL_INVALID_ENUM
-    // render(0, GL_POLYGON, 8);      // GL_INVALID_ENUM
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[4][0][0]);
+    render(0, GL_TRIANGLES, 6);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[5][0][0]);
+    render(0, GL_TRIANGLE_STRIP, 8);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrices[6][0][0]);
+    render(0, GL_TRIANGLE_FAN, 8);
     glDisableVertexAttribArray(0);
 
     glfwSwapBuffers(window); // Update display
     glfwPollEvents();        // Receive events from the window
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 10));
+    current_rotation += 0.025f;
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
 
     GLenum err = glGetError();
     if (err != GL_NO_ERROR)

@@ -103,7 +103,7 @@ int main()
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(1.0f, 1.0f, 1.0f));
     glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model[0][0]);
     cube.render(0, 1);
 

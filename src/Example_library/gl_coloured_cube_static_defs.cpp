@@ -8,16 +8,6 @@ std::mutex gl_coloured_cube::common_data_mutex;
 #define CUBE_SIZE 0.5f
 
 const GLfloat gl_coloured_cube::CUBE_VERTS[] = {
-    -CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE, // 0
-    CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE,  // 1
-    -CUBE_SIZE, CUBE_SIZE, CUBE_SIZE,  // 2
-    CUBE_SIZE, CUBE_SIZE, CUBE_SIZE,   // 3
-
-    -CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, // 4
-    CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE,  // 5
-    -CUBE_SIZE, CUBE_SIZE, -CUBE_SIZE,  // 6
-    CUBE_SIZE, CUBE_SIZE, -CUBE_SIZE,   // 7
-
     // Front
     -CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE, // 0
     CUBE_SIZE, -CUBE_SIZE, CUBE_SIZE,  // 1
@@ -97,14 +87,43 @@ GLuint gl_coloured_cube::glRegisterCubeColorBuffer(
   const GLfloat g_color_buffer_data[] = {
       c_front.x, c_front.y, c_front.z,
       c_front.x, c_front.y, c_front.z,
+      c_front.x, c_front.y, c_front.z,
+      c_front.x, c_front.y, c_front.z,
+      c_front.x, c_front.y, c_front.z,
+      c_front.x, c_front.y, c_front.z,
+
       c_left.x, c_left.y, c_left.z,
       c_left.x, c_left.y, c_left.z,
+      c_left.x, c_left.y, c_left.z,
+      c_left.x, c_left.y, c_left.z,
+      c_left.x, c_left.y, c_left.z,
+      c_left.x, c_left.y, c_left.z,
+
       c_right.x, c_right.y, c_right.z,
       c_right.x, c_right.y, c_right.z,
+      c_right.x, c_right.y, c_right.z,
+      c_right.x, c_right.y, c_right.z,
+      c_right.x, c_right.y, c_right.z,
+      c_right.x, c_right.y, c_right.z,
+
       c_up.x, c_up.y, c_up.z,
       c_up.x, c_up.y, c_up.z,
+      c_up.x, c_up.y, c_up.z,
+      c_up.x, c_up.y, c_up.z,
+      c_up.x, c_up.y, c_up.z,
+      c_up.x, c_up.y, c_up.z,
+
       c_down.x, c_down.y, c_down.z,
       c_down.x, c_down.y, c_down.z,
+      c_down.x, c_down.y, c_down.z,
+      c_down.x, c_down.y, c_down.z,
+      c_down.x, c_down.y, c_down.z,
+      c_down.x, c_down.y, c_down.z,
+
+      c_back.x, c_back.y, c_back.z,
+      c_back.x, c_back.y, c_back.z,
+      c_back.x, c_back.y, c_back.z,
+      c_back.x, c_back.y, c_back.z,
       c_back.x, c_back.y, c_back.z,
       c_back.x, c_back.y, c_back.z};
 

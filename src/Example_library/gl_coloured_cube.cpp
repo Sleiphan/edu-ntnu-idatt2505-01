@@ -42,6 +42,8 @@ gl_coloured_cube::~gl_coloured_cube()
 
 void gl_coloured_cube::render(GLuint position_attribute_id, GLuint color_attribute_id)
 {
+  glBindVertexArray(gl_coloured_cube::vertex_array_id);
+
   glEnableVertexAttribArray(position_attribute_id);
   glBindBuffer(GL_ARRAY_BUFFER, gl_coloured_cube::vertex_buffer_id);
   glVertexAttribPointer(position_attribute_id, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);

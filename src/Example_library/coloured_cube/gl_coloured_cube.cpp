@@ -4,11 +4,11 @@
 
 gl_coloured_cube::gl_coloured_cube(
     glm::vec3 c_front,
-    glm::vec3 c_left,
-    glm::vec3 c_right,
+    glm::vec3 c_back,
     glm::vec3 c_up,
     glm::vec3 c_down,
-    glm::vec3 c_back)
+    glm::vec3 c_left,
+    glm::vec3 c_right)
 {
   gl_coloured_cube::common_data_mutex.lock();
   if (gl_coloured_cube::ref_count <= 0)
@@ -24,7 +24,7 @@ gl_coloured_cube::gl_coloured_cube(
   if (err != GL_NO_ERROR)
     printf("%d", err);
 
-  this->color_buffer_id = gl_coloured_cube::glRegisterCubeColorBuffer(c_front, c_left, c_right, c_up, c_down, c_back);
+  this->color_buffer_id = gl_coloured_cube::glRegisterCubeColorBuffer(c_front, c_back, c_up, c_down, c_left, c_right);
 }
 
 gl_coloured_cube::~gl_coloured_cube()

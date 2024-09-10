@@ -78,11 +78,11 @@ void gl_coloured_cube::unregister_common_static_data()
 
 GLuint gl_coloured_cube::glRegisterCubeColorBuffer(
     glm::vec3 c_front,
-    glm::vec3 c_left,
-    glm::vec3 c_right,
+    glm::vec3 c_back,
     glm::vec3 c_up,
     glm::vec3 c_down,
-    glm::vec3 c_back)
+    glm::vec3 c_left,
+    glm::vec3 c_right)
 {
   const GLfloat g_color_buffer_data[] = {
       c_front.x, c_front.y, c_front.z,

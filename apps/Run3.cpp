@@ -1,5 +1,6 @@
 #include "Example_library/gl_coloured_cube.hpp"
-#include <Example_library/shader_loader.hpp>
+#include "Example_library/rubiks_cube/gl_rubics_cube_base_model.hpp"
+#include "Example_library/shader_loader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <chrono>
@@ -72,27 +73,33 @@ int main()
 
   glUseProgram(shader_id);
 
-  gl_coloured_cube cube(
-      glm::vec3(1.0, 0.0f, 0.0f),
-      glm::vec3(0.0, 1.0f, 0.0f),
-      glm::vec3(0.0, 0.0f, 1.0f),
-      glm::vec3(1.0, 1.0f, 0.0f),
-      glm::vec3(1.0, 0.0f, 1.0f),
-      glm::vec3(0.0, 1.0f, 1.0f));
+  glm::vec3 gray = glm::vec3(0.2f);
+
+  gl_rubics_cube_base_model cube(
+      glm::vec3(1.0f, 0.0f, 0.0f),
+      glm::vec3(0.0f, 1.0f, 0.0f),
+      glm::vec3(0.0f, 0.0f, 1.0f),
+      glm::vec3(1.0f, 1.0f, 0.0f),
+      glm::vec3(1.0f, 0.0f, 1.0f),
+      glm::vec3(0.0f, 1.0f, 1.0f),
+      gray);
 
   // Create a handle pointing to the matrix inside our shader
+  GLuint local_matrix_handle = glGetUniformLocation(shader_id, "local_matrix");
   GLuint model_matrix_handle = glGetUniformLocation(shader_id, "model_matrix");
   GLuint view_matrix_handle = glGetUniformLocation(shader_id, "view_matrix");
   GLuint projection_matrix_handle = glGetUniformLocation(shader_id, "projection_matrix");
+  glm::mat4 local_matrix = glm::mat4(1.0f);
   glm::mat4 model_matrix = glm::mat4(1.0f);
   glm::mat4 view_matrix = glm::lookAt(
-      glm::vec3(0, 0, 3),
+      glm::vec3(0, 0, 5),
       glm::vec3(0, 0, 0),
       glm::vec3(0, 1, 0));
-  glm::mat4 Projection = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
-  // glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrix[0][0]);
+  glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
+  glUniformMatrix4fv(local_matrix_handle, 1, GL_FALSE, &local_matrix[0][0]);
+  glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrix[0][0]);
   glUniformMatrix4fv(view_matrix_handle, 1, GL_FALSE, &view_matrix[0][0]);
-  glUniformMatrix4fv(projection_matrix_handle, 1, GL_FALSE, &Projection[0][0]);
+  glUniformMatrix4fv(projection_matrix_handle, 1, GL_FALSE, &projection_matrix[0][0]);
 
   float current_rotation = 0.0f;
 
@@ -105,7 +112,7 @@ int main()
 
     glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(1.0f, 1.0f, 1.0f));
     glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model[0][0]);
-    cube.render(0, 1);
+    cube.render(0, 1, local_matrix_handle);
 
     glfwSwapBuffers(window); // Update display
     glfwPollEvents();        // Receive events from the window

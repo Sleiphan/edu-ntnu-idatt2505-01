@@ -10,11 +10,11 @@ class gl_coloured_cube
 public:
   gl_coloured_cube(
       glm::vec3 c_front,
-      glm::vec3 c_left,
-      glm::vec3 c_right,
+      glm::vec3 c_back,
       glm::vec3 c_up,
       glm::vec3 c_down,
-      glm::vec3 c_back);
+      glm::vec3 c_left,
+      glm::vec3 c_right);
   ~gl_coloured_cube();
 
   void render(GLuint position_attribute_id, GLuint color_attribute_id);
@@ -34,11 +34,11 @@ private:
 
   static GLuint glRegisterCubeColorBuffer(
       glm::vec3 c_front,
-      glm::vec3 c_left,
-      glm::vec3 c_right,
+      glm::vec3 c_back,
       glm::vec3 c_up,
       glm::vec3 c_down,
-      glm::vec3 c_back);
+      glm::vec3 c_left,
+      glm::vec3 c_right);
 
   void unregister_color_buffer(const GLuint color_buffer_id);
 };

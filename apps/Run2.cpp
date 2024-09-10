@@ -1,15 +1,15 @@
-#include <cstdlib>
-#include <stdio.h>
-#include <chrono>
-#include <thread>
+#include <Example_library/shader_loader.hpp>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <Example_library/shader_loader.hpp>
-#include <glm/glm.hpp>
+#include <chrono>
+#include <cstdlib>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <stdio.h>
+#include <thread>
 
 #define GL_WINDOW_WIDTH 720
 #define GL_WINDOW_HEIGHT 480

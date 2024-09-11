@@ -1,5 +1,6 @@
 #include "Example_library/gl_coloured_cube.hpp"
 #include "Example_library/rubiks_cube/gl_rubics_cube_base_model.hpp"
+#include "Example_library/rubiks_cube/rubiks_cube.hpp"
 #include "Example_library/shader_loader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -10,6 +11,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <iostream>
 #include <stdio.h>
 #include <thread>
 
@@ -66,6 +69,10 @@ GLFWwindow *init_opengl()
 
 int main()
 {
+}
+
+int main_2()
+{
   GLFWwindow *window = init_opengl();
 
   // Load our example shaders
@@ -110,7 +117,7 @@ int main()
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(1.0f, 1.0f, 1.0f));
+    glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model[0][0]);
     cube.render(0, 1, local_matrix_handle);
 

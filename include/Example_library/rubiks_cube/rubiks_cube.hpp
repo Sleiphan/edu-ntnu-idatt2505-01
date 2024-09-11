@@ -1,14 +1,30 @@
 #ifndef CUSTOM_RUBIKS_CUBE
 #define CUSTOM_RUBIKS_CUBE
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
-#include <mutex>
 
 class rubiks_cube
 {
 public:
+  rubiks_cube();
+
+  glm::mat4 cubies[3][3][3];
+
+  void rotate(char axis, char slice_idx, bool counterclockwise);
+
+  glm::mat4 get_cubie(char x, char y, char z);
+
+  static const char AXIS_X, AXIS_Y, AXIS_Z;
+
 private:
+  static const glm::mat4 ROT_X_CLOCKWISE;
+  static const glm::mat4 ROT_X_COUNTERCW;
+  static const glm::mat4 ROT_Y_CLOCKWISE;
+  static const glm::mat4 ROT_Y_COUNTERCW;
+  static const glm::mat4 ROT_Z_CLOCKWISE;
+  static const glm::mat4 ROT_Z_COUNTERCW;
+
+  static const glm::mat4 ROTATION_MATRICES[];
 };
 
 #endif

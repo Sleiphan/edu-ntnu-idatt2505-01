@@ -40,7 +40,7 @@ private:
       glm::vec3 c_left,
       glm::vec3 c_right);
 
-  void unregister_color_buffer(const GLuint color_buffer_id);
+  static void unregister_color_buffer(const GLuint color_buffer_id);
 };
 
 #endif

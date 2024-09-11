@@ -48,6 +48,18 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": []
-        }
+        },
+        {
+            "name": "Run3",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "preLaunchTask": "CMake: Debug: build",
+            "program": "${workspaceFolder}/bin/Run3.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "console": "integratedTerminal"
+        },
     ]
 }

@@ -107,13 +107,15 @@ int main()
 
   glEnable(GL_DEPTH_TEST);
 
-  cube.rotate(2, 2, false);
-  cube.rotate(2, 2, false);
+  // cube.rotate(2, 2, false);
+  // cube.rotate(2, 2, false);
 
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
          glfwWindowShouldClose(window) == 0)
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    cube.rotate_anim(2, 2, current_rotation);
 
     glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
     glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model[0][0]);
@@ -122,7 +124,7 @@ int main()
     glfwSwapBuffers(window); // Update display
     glfwPollEvents();        // Receive events from the window
 
-    current_rotation += 0.025f;
+    current_rotation += 0.015f;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
 

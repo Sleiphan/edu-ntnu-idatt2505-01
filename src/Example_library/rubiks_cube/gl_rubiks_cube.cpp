@@ -23,8 +23,9 @@ void gl_rubiks_cube::render(GLuint position_attribute_id, GLuint color_attribute
             {
                 rubiks_cubie cube = matrix_model.get_cubie(x, y, z);
                 const gl_coloured_cube &model = base_model.get_cubie(cube.opos);
+                glm::mat4 matrix = anim_layer.get_transformation(x, y, z) * cube.m;
 
-                glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &cube.m[0][0]);
+                glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &matrix[0][0]);
                 model.render(position_attribute_id, color_attribute_id);
             }
 }
@@ -32,6 +33,11 @@ void gl_rubiks_cube::render(GLuint position_attribute_id, GLuint color_attribute
 void gl_rubiks_cube::rotate(char axis, char slice_idx, bool counterclockwise)
 {
     matrix_model.rotate(axis, slice_idx, counterclockwise);
+}
+
+void gl_rubiks_cube::rotate_anim(char axis, char slice_idx, float angle)
+{
+    anim_layer.rotate(axis, slice_idx, angle);
 }
 
 #endif // CUSTOM_GL_RUBIKS_CUBE

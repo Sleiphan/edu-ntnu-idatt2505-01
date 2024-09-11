@@ -17,10 +17,12 @@ public:
       glm::vec3 c_right);
   ~gl_coloured_cube();
 
-  void render(GLuint position_attribute_id, GLuint color_attribute_id);
+  GLuint get_color_buffer_id() { return color_buffer_id; }
+
+  void render(const GLuint position_attribute_id, const GLuint color_attribute_id) const;
 
 private:
-  GLuint color_buffer_id;
+  int color_buffer_id;
 
   static int ref_count;
   static std::mutex common_data_mutex;

@@ -3,16 +3,23 @@
 
 #include <glm/glm.hpp>
 
+class rubiks_cubie
+{
+public:
+  glm::mat4 m;
+  glm::i8vec3 opos;
+};
+
 class rubiks_cube
 {
 public:
   rubiks_cube();
 
-  glm::mat4 cubies[3][3][3];
+  rubiks_cubie cubies[3][3][3];
 
   void rotate(char axis, char slice_idx, bool counterclockwise);
 
-  glm::mat4 get_cubie(char x, char y, char z);
+  rubiks_cubie get_cubie(char x, char y, char z);
 
   static const char AXIS_X, AXIS_Y, AXIS_Z;
 

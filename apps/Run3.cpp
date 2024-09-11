@@ -1,6 +1,5 @@
-#include "Example_library/gl_coloured_cube.hpp"
 #include "Example_library/rubiks_cube/gl_rubics_cube_base_model.hpp"
-#include "Example_library/rubiks_cube/rubiks_cube.hpp"
+#include "Example_library/rubiks_cube/gl_rubiks_cube.hpp"
 #include "Example_library/shader_loader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -69,10 +68,6 @@ GLFWwindow *init_opengl()
 
 int main()
 {
-}
-
-int main_2()
-{
   GLFWwindow *window = init_opengl();
 
   // Load our example shaders
@@ -82,7 +77,7 @@ int main_2()
 
   glm::vec3 gray = glm::vec3(0.2f);
 
-  gl_rubics_cube_base_model cube(
+  gl_rubiks_cube cube(
       glm::vec3(1.0f, 0.0f, 0.0f),
       glm::vec3(0.0f, 1.0f, 0.0f),
       glm::vec3(0.0f, 0.0f, 1.0f),
@@ -99,7 +94,7 @@ int main_2()
   glm::mat4 local_matrix = glm::mat4(1.0f);
   glm::mat4 model_matrix = glm::mat4(1.0f);
   glm::mat4 view_matrix = glm::lookAt(
-      glm::vec3(0, 0, 5),
+      glm::vec3(0, 0, 10),
       glm::vec3(0, 0, 0),
       glm::vec3(0, 1, 0));
   glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
@@ -111,6 +106,9 @@ int main_2()
   float current_rotation = 0.0f;
 
   glEnable(GL_DEPTH_TEST);
+
+  cube.rotate(2, 2, false);
+  cube.rotate(2, 2, false);
 
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
          glfwWindowShouldClose(window) == 0)

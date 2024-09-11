@@ -30,6 +30,7 @@ set_target_properties(${LIBRARY}
     ARCHIVE_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/../bin
 )
 
+include_directories(include)
 
 
 # Add Google C++ Testing Framework as part of this project

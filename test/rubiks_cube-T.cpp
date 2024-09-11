@@ -11,7 +11,7 @@ bool verify_positions(rubiks_cube cube)
       for (char x = -1; x < 2; ++x)
       {
         glm::i8vec3 position(x, y, z);
-        glm::i8vec3 target_position = cube.get_cubie(x, y, z)[3];
+        glm::i8vec3 target_position = cube.get_cubie(x, y, z).m[3];
 
         if (position != target_position)
           correct = false;

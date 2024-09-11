@@ -9,7 +9,7 @@ gl_rubics_cube_base_model::gl_rubics_cube_base_model(
     glm::vec3 c__down,
     glm::vec3 c__left,
     glm::vec3 c_right,
-    glm::vec3 c_empty) : cubes{
+    glm::vec3 c_empty) : cubies{
                              gl_coloured_cube(c_empty, c__back, c_empty, c__down, c__left, c_empty), // Back, down,  left
                              gl_coloured_cube(c_empty, c__back, c_empty, c__down, c_empty, c_empty), // Back, down,  mid
                              gl_coloured_cube(c_empty, c__back, c_empty, c__down, c_empty, c_right), // Back, down,  right
@@ -54,6 +54,6 @@ void gl_rubics_cube_base_model::render(GLuint position_attribute_id, GLuint colo
         model_matrix = glm::scale(model_matrix, glm::vec3(0.8f));
         glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrix[0][0]);
 
-        cubes[z][y][x].render(position_attribute_id, color_attribute_id);
+        cubies[z][y][x].render(position_attribute_id, color_attribute_id);
       }
 }

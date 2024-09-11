@@ -40,7 +40,7 @@ gl_coloured_cube::~gl_coloured_cube()
   gl_coloured_cube::common_data_mutex.unlock();
 }
 
-void gl_coloured_cube::render(GLuint position_attribute_id, GLuint color_attribute_id)
+void gl_coloured_cube::render(const GLuint position_attribute_id, const GLuint color_attribute_id) const
 {
   glBindVertexArray(gl_coloured_cube::vertex_array_id);
 

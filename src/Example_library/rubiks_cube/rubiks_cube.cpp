@@ -1,6 +1,7 @@
 // #define GLM_FORCE_SWIZZLE
 
 #include "Example_library/rubiks_cube/rubiks_cube.hpp"
+#include <glm/ext/matrix_transform.hpp>
 #include <utility>
 
 const glm::mat4 rubiks_cube::ROT_X_CLOCKWISE = glm::mat4(glm::i8vec4(1, 0, 0, 0),
@@ -51,12 +52,14 @@ rubiks_cube::rubiks_cube()
     for (char y = 0; y < 3; ++y)
       for (char x = 0; x < 3; ++x)
       {
-        cubies[z][y][x] = glm::mat4(1.0f);
-        cubies[z][y][x][3] = glm::vec4(x - 1, y - 1, z - 1, 1.0f);
+        cubies[z][y][x].opos = glm::i8vec3(x - 1, y - 1, z - 1);
+        cubies[z][y][x].m = glm::mat4(0.85f);
+        // cubies[z][y][x].m = glm::translate(cubies[z][y][x].m, glm::vec3(x - 1, y - 1, z - 1));
+        cubies[z][y][x].m[3] = glm::vec4(x - 1, y - 1, z - 1, 1.0f);
       }
 }
 
-glm::mat4 rubiks_cube::get_cubie(char x, char y, char z)
+rubiks_cubie rubiks_cube::get_cubie(char x, char y, char z)
 {
   return cubies[z + 1][y + 1][x + 1];
 }
@@ -94,22 +97,36 @@ void rubiks_cube::rotate(char axis, char plane_idx, bool counterclockwise)
   // Set the plane. This value will be constant
   *c = plane_idx;
 
-  // Apply rotation on relevant cubes
+  // Apply rotation on relevant cubies
   for (*a = 0; *a < 3; ++*a)
     for (*b = 0; *b < 3; ++*b)
-      cubies[z][y][x] = rot_matrix * cubies[z][y][x];
+      cubies[z][y][x].m = rot_matrix * cubies[z][y][x].m;
 
   // Move the cubes to their correct location
   for (*a = 0; *a < 3; ++*a)
     for (*b = 0; *b < 3; ++*b)
     {
       glm::i8vec3 p(x - 1, y - 1, z - 1);
-      glm::i8vec3 t = cubies[z][y][x][3];
+      glm::i8vec3 t = cubies[z][y][x].m[3];
 
       while (p != t)
       {
         std::swap(cubies[z][y][x], cubies[t.z + 1][t.y + 1][t.x + 1]);
-        t = cubies[z][y][x][3];
+        t = cubies[z][y][x].m[3];
       }
     }
 }
+
+// rubiks_cubie::rubiks_cubie() {}
+
+// rubiks_cubie::rubiks_cubie(const rubiks_cubie &other)
+// {
+//   this->m = other.m;
+//   this->opos = other.opos;
+// }
+
+// void rubiks_cubie::operator=(const rubiks_cubie &other)
+// {
+//   this->m = other.m;
+//   this->opos = other.opos;
+// }

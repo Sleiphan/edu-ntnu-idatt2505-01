@@ -16,6 +16,8 @@ public:
 
   void render(GLuint position_attribute_id, GLuint color_attribute_id, GLuint model_matrix_handle);
 
+  void rotate(char axis, char slice_idx, bool counterclockwise);
+
 private:
   rubiks_cube matrix_model;
   gl_rubics_cube_base_model base_model;

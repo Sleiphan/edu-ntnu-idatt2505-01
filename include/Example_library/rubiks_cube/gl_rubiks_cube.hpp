@@ -1,3 +1,5 @@
+#ifndef CUSTOM_GL_RUBIKS_CUBE
+#define CUSTOM_GL_RUBIKS_CUBE
 
 #include "Example_library/rubiks_cube/gl_rubics_cube_base_model.hpp"
 #include "Example_library/rubiks_cube/rubiks_cube.hpp"
@@ -26,3 +28,5 @@ private:
   gl_rubics_cube_base_model base_model;
   rubiks_rotation_anim_layer anim_layer;
 };
+
+#endif // CUSTOM_GL_RUBIKS_CUBE

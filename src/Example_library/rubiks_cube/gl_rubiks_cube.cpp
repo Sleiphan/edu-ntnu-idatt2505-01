@@ -1,6 +1,3 @@
-#ifndef CUSTOM_GL_RUBIKS_CUBE
-#define CUSTOM_GL_RUBIKS_CUBE
-
 #include "Example_library/rubiks_cube/gl_rubiks_cube.hpp"
 
 gl_rubiks_cube::gl_rubiks_cube(
@@ -39,5 +36,3 @@ void gl_rubiks_cube::rotate_anim(char axis, char slice_idx, float angle)
 {
     anim_layer.rotate(axis, slice_idx, angle);
 }
-
-#endif // CUSTOM_GL_RUBIKS_CUBE

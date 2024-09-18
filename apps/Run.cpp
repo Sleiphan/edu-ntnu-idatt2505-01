@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <chrono>
-#include <thread>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <chrono>
+#include <stdio.h>
+#include <thread>
 
 #include <Example_library/shader_loader.hpp>
 

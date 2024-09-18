@@ -24,8 +24,8 @@ const glm::mat4 rubiks_cube::ROT_Y_COUNTERCW = glm::mat4(glm::i8vec4(0, 0, -1, 0
                                                          glm::i8vec4(1, 0, 0, 0),
                                                          glm::i8vec4(0, 0, 0, 1));
 
-const glm::mat4 rubiks_cube::ROT_Z_CLOCKWISE = glm::mat4(glm::i8vec4(0, 1, 0, 0),
-                                                         glm::i8vec4(-1, 0, 0, 0),
+const glm::mat4 rubiks_cube::ROT_Z_CLOCKWISE = glm::mat4(glm::i8vec4(0, -1, 0, 0),
+                                                         glm::i8vec4(1, 0, 0, 0),
                                                          glm::i8vec4(0, 0, 1, 0),
                                                          glm::i8vec4(0, 0, 0, 1));
 

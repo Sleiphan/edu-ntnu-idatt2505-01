@@ -2,7 +2,7 @@
 #include "Example_library/rubiks_cube/rubiks_cube.hpp"
 #include <glm/ext/matrix_transform.hpp>
 
-rubiks_rotation_anim_layer::rubiks_rotation_anim_layer() : axis(-1), plane_idx(-1), transformation(glm::mat4(1.0f)) {}
+rubiks_rotation_anim_layer::rubiks_rotation_anim_layer() : axis(0), plane_idx(0), transformation(glm::mat4(1.0f)) {}
 
 void rubiks_rotation_anim_layer::rotate(char axis, char plane_idx, float angle)
 {

@@ -1,5 +1,6 @@
 #include "Example_library/rubiks_cube/gl_rubics_cube_base_model.hpp"
 #include "Example_library/rubiks_cube/gl_rubiks_cube.hpp"
+#include "Example_library/rubiks_cube/rubiks_controller.hpp"
 #include "Example_library/shader_loader.hpp"
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -94,7 +95,7 @@ int main()
   glm::mat4 local_matrix = glm::mat4(1.0f);
   glm::mat4 model_matrix = glm::mat4(1.0f);
   glm::mat4 view_matrix = glm::lookAt(
-      glm::vec3(0, 0, 10),
+      glm::vec3(5, 5, 10),
       glm::vec3(0, 0, 0),
       glm::vec3(0, 1, 0));
   glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0f), (float)(GL_WINDOW_WIDTH) / (float)(GL_WINDOW_HEIGHT), 0.1f, 100.0f);
@@ -103,28 +104,22 @@ int main()
   glUniformMatrix4fv(view_matrix_handle, 1, GL_FALSE, &view_matrix[0][0]);
   glUniformMatrix4fv(projection_matrix_handle, 1, GL_FALSE, &projection_matrix[0][0]);
 
-  float current_rotation = 0.0f;
-
   glEnable(GL_DEPTH_TEST);
 
-  // cube.rotate(2, 2, false);
-  // cube.rotate(2, 2, false);
+  rubiks_controller cube_ctl(cube);
 
   while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&
          glfwWindowShouldClose(window) == 0)
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    cube.rotate_anim(2, 2, current_rotation);
-
-    glm::mat4 model = glm::rotate(model_matrix, current_rotation, glm::vec3(0.0f, 1.0f, 0.0f));
-    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(model_matrix_handle, 1, GL_FALSE, &model_matrix[0][0]);
+    cube_ctl.process_keypress(window);
+    cube_ctl.step();
     cube.render(0, 1, local_matrix_handle);
 
     glfwSwapBuffers(window); // Update display
     glfwPollEvents();        // Receive events from the window
-
-    current_rotation += 0.015f;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1000 / 60));
 
